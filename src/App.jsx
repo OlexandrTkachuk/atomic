@@ -2,6 +2,8 @@ import { Component } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Items from "./components/Items";
+import Categories from "./components/Categories";
+import ShowFullItem from "./components/ShowFullItem";
 
 const items = [
 	{
@@ -79,13 +81,83 @@ const items = [
 ];
 
 class App extends Component {
-	state = { items: items };
+	state = {
+		orders: [],
+		items: items,
+		currentItems: [],
+		showFullItem: false,
+		fullItem: {},
+	};
+
+	componentDidMount() {
+		this.setState({ currentItems: [...this.state.items] });
+	}
+
+	addToOrder = (item) => {
+		let isInArray = false;
+
+		this.state.orders.forEach((order) => {
+			if (order.id === item.id) {
+				isInArray = true;
+			}
+		});
+
+		if (!isInArray) {
+			this.setState({ orders: [...this.state.orders, item] });
+		}
+	};
+
+	deleteFromOrder = (id) => {
+		this.setState({
+			orders: this.state.orders.filter((order) => order.id !== id),
+		});
+	};
+
+	chooseCategory = (key) => {
+		if (key === "all") {
+			this.setState({ currentItems: [...this.state.items] });
+			return;
+		}
+
+		if (key !== "" && key !== "all") {
+			this.setState({
+				currentItems: [
+					...this.state.items.filter((item) => item.category === key),
+				],
+			});
+		}
+	};
+
+	onShowItem = (item) => {
+		this.setState({ fullItem: item });
+		this.setState({ showFullItem: !this.state.showFullItem });
+	};
+
+	onClose = () => {
+		this.setState({ showFullItem: !this.state.showFullItem });
+	};
 
 	render() {
+		const { orders, currentItems, showFullItem, fullItem } = this.state;
+
 		return (
 			<div className="wrapper">
-				<Header />
-				<Items items={this.state.items} />
+				<Header orders={orders} onDelete={this.deleteFromOrder} />
+				<Categories chooseCategory={this.chooseCategory} />
+				<Items
+					items={currentItems}
+					onAdd={this.addToOrder}
+					onShowItem={this.onShowItem}
+				/>
+
+				{showFullItem && (
+					<ShowFullItem
+						item={fullItem}
+						onAdd={this.addToOrder}
+						onShowItem={this.onShowItem}
+						onClose={this.onClose}
+					/>
+				)}
 				<Footer />
 			</div>
 		);

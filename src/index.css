@@ -17,6 +17,10 @@ body {
 	margin: 50px auto;
 }
 
+header {
+	position: relative;
+}
+
 header .logo {
 	font-weight: 600;
 	font-size: 20px;
@@ -36,6 +40,73 @@ header ul.nav li {
 
 header ul.nav li:hover {
 	opacity: 0.5;
+}
+
+header .shop-cart-button {
+	float: right;
+	cursor: pointer;
+	transition: color, transform 500ms ease;
+}
+
+header .shop-cart-button:hover,
+header .shop-cart-button.active {
+	color: #dc3d3d;
+	transform: scale(1.5);
+}
+
+header .shop-cart {
+	z-index: 1000;
+	position: absolute;
+	top: 30px;
+	right: 0;
+	width: 450px;
+	background: #fafafa;
+	box-shadow: 4px 5px 15px -7px #606060;
+	padding: 20px;
+}
+
+header .shop-cart .empty h2 {
+	font-size: 20px;
+	text-align: center;
+	padding: 10px 0;
+}
+
+header .shop-cart .item {
+	width: 100%;
+	float: left;
+	margin-bottom: 20px;
+	align-items: center;
+}
+
+header .shop-cart .item img {
+	width: 70px;
+	float: left;
+	margin-right: 20px;
+	height: auto;
+}
+
+header .shop-cart .item h2 {
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+
+header .shop-cart .item p {
+	color: #797979;
+	font-weight: 600;
+}
+
+header .shop-cart .item .delete-icon {
+	color: #ca5252;
+	float: right;
+	position: relative;
+	top: -25px;
+	cursor: pointer;
+	transition: color, transform 500ms ease;
+}
+
+header .shop-cart .item .delete-icon:hover {
+	color: #d83030;
+	transform: scale(1.5);
 }
 
 header .presentation {
@@ -72,6 +143,34 @@ header .presentation::before {
 	font-size: 15px;
 }
 
+.totalPrice {
+	float: left;
+	width: 100%;
+	font-weight: 600;
+	font-size: 20px;
+}
+
+.categories {
+	display: flex;
+	justify-content: center;
+}
+
+.categories div {
+	background: #f2f2f2;
+	border-radius: 50px;
+	padding: 10px 20px;
+	margin-bottom: 25px;
+	margin-right: 15px;
+	cursor: pointer;
+	border: 1px solid transparent;
+	transition: all 500ms ease;
+}
+
+.categories div:hover {
+	border: 1px solid silver;
+	transform: scale(1.05);
+}
+
 main {
 	display: flex;
 	width: 100%;
@@ -89,12 +188,17 @@ main .item {
 	padding-bottom: 20px;
 }
 
-main .item img {
+main .item img,
+.full-item img {
 	border-radius: 10px 10px 0 0;
 	width: 100%;
 	height: 300px;
-
+	cursor: pointer;
 	transition: transform 500ms ease;
+}
+
+.full-item img {
+	height: auto;
 }
 
 main .item img:hover {
@@ -103,16 +207,21 @@ main .item img:hover {
 
 main h2,
 main p,
-main b {
+main b,
+.full-item h2,
+.full-item p,
+.full-item b {
 	margin: 10px 20px;
 	color: #333;
 }
 
-main b {
+main b,
+.full-item b {
 	color: #5fa36a;
 }
 
-main .add-to-card {
+main .add-to-card,
+.full-item .add-to-card {
 	position: absolute;
 	right: 20px;
 	bottom: 20px;
@@ -123,13 +232,34 @@ main .add-to-card {
 	color: #fff;
 	border-radius: 50%;
 	cursor: pointer;
-	background-color: rgb(92, 31, 31);
+	background-color: #dc3d3d;
 	font-weight: 600;
 	transition: transform 500ms ease;
 }
 
-main .add-to-card:hover {
+main .add-to-card:hover,
+.full-item .add-to-card:hover {
 	transform: scale(1.3) translateY(-3px);
+}
+
+.full-item {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.729);
+	z-index: 9999;
+	overflow: auto;
+}
+
+.full-item > div {
+	width: 600px;
+	position: relative;
+	margin: 10% auto;
+	padding: 40px 30px;
+	background: #fff;
+	border-radius: 8px;
 }
 
 footer {

@@ -3,10 +3,18 @@ import Item from "./Item";
 
 export class Items extends Component {
 	render() {
+		const { items, onAdd, onShowItem } = this.props;
 		return (
 			<main>
-				{this.props.items.map((item) => {
-					return <Item key={item.id} item={item} />;
+				{items.map((item) => {
+					return (
+						<Item
+							key={item.id}
+							item={item}
+							onAdd={onAdd}
+							onShowItem={onShowItem}
+						/>
+					);
 				})}
 			</main>
 		);
